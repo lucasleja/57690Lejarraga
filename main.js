@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 ************************************************************************************************************************************* */
 
 
-function renderProducts(products, containerId) {
+/* function renderProducts(products, containerId) {
     const container = document.getElementById(containerId);
     products.forEach(product => {
         let productCard = `
@@ -169,5 +169,251 @@ window.onload = function() {
     loadCartFromLocalStorage();
 };
 
+ */
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* // Variables globales para los contenedores
+const productContainer = document.getElementById('productContainer');
+const cartContainer = document.getElementById('cartContainer');
+
+function renderProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    products.forEach(product => {
+        let productCard = `
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card">
+                    <img src="${product.img}" class="card-img-top" alt="${product.nombre}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.nombre}</h5>
+                        <p class="card-text">Marca: ${product.marca}<br>Linea: ${product.linea}<br>Modelo: ${product.modelo}</p>
+                        <p>Precio: $${product.precio.toLocaleString()}</p>
+                        <p>Stock: ${product.stock}</p>
+                        <input type="number" min="0" max="${product.stock}" value="0" class="form-control">
+                        <button onclick="addToCart(${product.id})" class="btn btn-primary mt-2">Agregar al Carrito</button>
+                    </div>
+                </div>
+            </div>`;
+        container.innerHTML += productCard;
+    });
+}
+
+if (productContainer) {
+    // Si el contenedor de productos existe, asumimos que estamos en index.html
+    renderProducts(productos.filter(p => p.marca === 'specialized'), 'productContainer');
+} else if (cartContainer) {
+    // Si el contenedor de carrito existe, asumimos que estamos en carrito.html
+    // Aquí puedes cargar otros productos o dejarlo vacío si solo quieres mostrar el carrito
+}
+
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+function addToCart(productId) {
+    const product = productos.find(p => p.id === productId);
+    if (!product || product.stock <= 0) {
+        alert("No hay stock de este producto");
+        return;
+    }
+
+    if (!cart[productId]) {
+        cart[productId] = {...product, quantity: 1 };
+    } else {
+        cart[productId].quantity++;
+    }
+
+    alert(`Usted agregó ${product.nombre} al carrito`);
+    saveCartToLocalStorage();
+}
+
+function saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('cart');
+    const isCartAvailable = document.querySelector('#cartContainer'); // Corrección en el selector
+    if (savedCart && isCartAvailable) {
+        cart = JSON.parse(savedCart);
+        renderCart();
+    }
+}
+
+function renderCart() {
+    const cartContainer = document.getElementById('cartContainer');
+    cartContainer.innerHTML = ''; 
+    let total = 0;
+    Object.values(cart).forEach(item => {
+        total += item.precio * item.quantity;
+        let cartItem = `<p>${item.nombre}: ${item.quantity} x $${item.precio.toLocaleString()} = $${(item.precio * item.quantity).toLocaleString()}</p>`;
+        cartContainer.innerHTML += cartItem;
+    });
+
+    if (Object.keys(cart).length > 0) {
+        cartContainer.innerHTML += `<hr><p>Total: $${total.toLocaleString()}</p><button onclick="purchase()" class="btn btn-success">Comprar</button>`;
+    } else {
+        cartContainer.innerHTML = '<p>El carrito aún está vacío.</p>';
+    }
+}
+
+function purchase() {
+    if (Object.keys(cart).length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
+    alert("Su compra se realizó con éxito");
+    localStorage.removeItem('cart');
+}
+
+window.onload = function() {
+    loadCartFromLocalStorage();
+};
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Variables globales para los contenedores
+const productContainer = document.getElementById('productContainer');
+const cartContainer = document.getElementById('cartContainer');
+
+function renderProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    products.forEach(product => {
+        let productCard = `
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card">
+                    <img src="${product.img}" class="card-img-top" alt="${product.nombre}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.nombre}</h5>
+                        <p class="card-text">Marca: ${product.marca}<br>Linea: ${product.linea}<br>Modelo: ${product.modelo}</p>
+                        <p>Precio: $${product.precio.toLocaleString()}</p>
+                        <p>Stock: ${product.stock}</p>
+                        <input type="number" min="0" max="${product.stock}" value="0" class="form-control">
+                        <button onclick="addToCart(${product.id})" class="btn btn-primary mt-2">Agregar al Carrito</button>
+                    </div>
+                </div>
+            </div>`;
+        container.innerHTML += productCard;
+    });
+}
+
+if (productContainer) {
+    renderProducts(productos.filter(p => p.marca === 'specialized'), 'productContainer');
+} else if (cartContainer) {
+    // No se renderizan productos adicionales en carrito.html
+}
+
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+function addToCart(productId) {
+    const product = productos.find(p => p.id === productId);
+    if (!product || product.stock <= 0) {
+        alert("No hay stock de este producto");
+        return;
+    }
+
+    if (!cart[productId]) {
+        cart[productId] = {...product, quantity: 1 };
+    } else {
+        cart[productId].quantity++;
+    }
+
+    alert(`Usted agregó ${product.nombre} al carrito`);
+    saveCartToLocalStorage();
+    renderCart(); // Renderiza el carrito después de agregar un producto
+}
+
+function removeFromCart(productId) {
+    delete cart[productId];
+    saveCartToLocalStorage();
+    renderCart(); // Vuelve a renderizar el carrito después de eliminar un producto
+}
+
+function emptyCart() {
+    cart = {};
+    saveCartToLocalStorage();
+    renderCart(); // Vuelve a renderizar el carrito después de vaciarlo
+}
+
+function saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('cart');
+    const isCartAvailable = document.querySelector('#cartContainer');
+    if (savedCart && isCartAvailable) {
+        cart = JSON.parse(savedCart);
+        renderCart();
+    }
+}
+
+function renderCart() {
+    const cartContainer = document.getElementById('cartContainer');
+    cartContainer.innerHTML = ''; 
+    let total = 0;
+    Object.entries(cart).forEach(([key, item]) => { // Usamos entries para obtener tanto key como value
+        total += item.precio * item.quantity;
+        let cartItem = `
+            <tr>
+                <td>${item.nombre}</td>
+                <td>x ${item.quantity}</td>
+                <td>$${(item.precio * item.quantity).toLocaleString()}</td>
+                <td><button onclick="removeFromCart(${key})" class="btn btn-danger">Quitar Artículo</button></td>
+            </tr>`;
+        cartContainer.innerHTML += cartItem;
+    });
+
+    if (Object.keys(cart).length > 0) {
+        cartContainer.innerHTML += `
+            <tr>
+                <td colspan="2"><strong>Total:</strong></td>
+                <td>$${total.toLocaleString()}</td>
+                <td>
+                    <button onclick="purchase()" class="btn btn-success">Comprar</button>
+                    <button onclick="emptyCart()" class="btn btn-warning ml-2">Vaciar Carrito</button>
+                </td>
+            </tr>`;
+    } else {
+        cartContainer.innerHTML = '<tr><td colspan="4">El carrito aún está vacío.</td></tr>';
+    }
+}
+
+function purchase() {
+    if (Object.keys(cart).length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
+    alert("Su compra se realizó con éxito");
+    localStorage.removeItem('cart');
+}
+
+window.onload = function() {
+    loadCartFromLocalStorage();
+};
