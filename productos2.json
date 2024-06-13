@@ -1,0 +1,125 @@
+{
+    "productos2": [
+        {
+          "id": 7,
+          "nombre": "bicicleta mtb",
+          "marca": "cannondale",
+          "linea": "trial",
+          "modelo": "7",
+          "stock": 25,
+          "precio": 800000,
+          "img": "./img/cannondale/7.jpg"
+        },
+        {
+          "id": 8,
+          "nombre": "bicicleta mtb",
+          "marca": "cannondale",
+          "linea": "trial",
+          "modelo": "5",
+          "stock": 14,
+          "precio": 3000000,
+          "img": "./img/cannondale/8.jpg"
+        },
+        {
+          "id": 9,
+          "nombre": "bicicleta mtb",
+          "marca": "cannondale",
+          "linea": "trial",
+          "modelo": "se4",
+          "stock": 20,
+          "precio": 5000000,
+          "img": "./img/cannondale/9.jpg"
+        },
+        {
+          "id": 10,
+          "nombre": "bicicleta ruta",
+          "marca": "cannondale",
+          "linea": "caad",
+          "modelo": "12",
+          "stock": 16,
+          "precio": 4000000,
+          "img": "./img/cannondale/10.jpg"
+        },
+        {
+          "id": 11,
+          "nombre": "bicicleta ruta",
+          "marca": "cannondale",
+          "linea": "caad",
+          "modelo": "optimo",
+          "stock": 2,
+          "precio": 5000000,
+          "img": "./img/cannondale/11.jpg"
+        },
+        {
+          "id": 12,
+          "nombre": "bicicleta ruta",
+          "marca": "cannondale",
+          "linea": "caad",
+          "modelo": "13",
+          "stock": 20,
+          "precio": 5000000,
+          "img": "./img/cannondale/12.jpg"
+        },
+        {
+          "id": 13,
+          "nombre": "bicicleta mtb",
+          "marca": "trek",
+          "linea": "marlin",
+          "modelo": "8",
+          "stock": 20,
+          "precio": 2000000,
+          "img": "./img/trek/13.jpg"
+        },
+        {
+          "id": 14,
+          "nombre": "bicicleta mtb",
+          "marca": "trek",
+          "linea": "xcaliber",
+          "modelo": "8",
+          "stock": 30,
+          "precio": 2500000,
+          "img": "./img/trek/14.jpg"
+        },
+        {
+          "id": 15,
+          "nombre": "bicicleta ruta",
+          "marca": "trek",
+          "linea": "emondal",
+          "modelo": "pro",
+          "stock": 10,
+          "precio": 8000000,
+          "img": "./img/trek/15.jpg"
+        },
+        {
+          "id": 16,
+          "nombre": "bicicleta ruta",
+          "marca": "trek",
+          "linea": "domane",
+          "modelo": "al3",
+          "stock": 13,
+          "precio": 4000000,
+          "img": "./img/trek/16.jpg"
+        },
+        {
+          "id": 17,
+          "nombre": "bicicleta ruta",
+          "marca": "trek",
+          "linea": "domane",
+          "modelo": "al2",
+          "stock": 9,
+          "precio": 3500000,
+          "img": "./img/trek/17.jpg"
+        },
+        {
+          "id": 18,
+          "nombre": "bicicleta mtb",
+          "marca": "trek",
+          "linea": "supercaliber",
+          "modelo": "9,7",
+          "stock": 7,
+          "precio": 5000000,
+          "img": "./img/trek/18.jpg"
+        }
+      ]
+      
+}

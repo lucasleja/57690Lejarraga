@@ -59,3 +59,11 @@
   border-radius: 5px;
 }
 
+
+
+.swal2-confirm {
+  background-color: #007bff; /* Cambia esto al color que desees */
+}
+.swal2-cancel {
+  background-color: #dc3545; /* Cambia esto al color que desees */
+}
