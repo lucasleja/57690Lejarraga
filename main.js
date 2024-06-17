@@ -13,7 +13,6 @@ class Producto {
 
 const productos = [];
 
-// Creación de instancias de Producto y agregándolas al array productos
 let producto1 = new Producto(1, "bicicleta mtb", "specialized", "rockhopper", "sport", 25, 800000, "./img/specialized/1.webp");
 let producto2 = new Producto(2, "bicicleta mtb", "specialized", "epic", "comp carbon", 15, 3000000, "./img/specialized/2.webp");
 let producto3 = new Producto(3, "bicicleta electrica", "specialized", "turbo Levo", "comp carbon", 10, 5000000, "./img/specialized/3.webp");
@@ -50,7 +49,6 @@ cargarProductos().then(() => {
     renderAllProducts();
 });
 
-// Variables globales para los contenedores
 const productContainer = document.getElementById('productContainer');
 
 function renderAllProducts() {
@@ -61,18 +59,20 @@ function renderAllProducts() {
         let productCard = `
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="card">
+                <div class="card-image-container">
                     <img src="${product.img}" class="card-img-top" alt="${product.nombre}">
+                </div>
                     <div class="card-body">
                         <h5 class="card-title">${product.nombre}</h5>
                         <p class="card-text">Marca: ${product.marca}<br>Linea: ${product.linea}<br>Modelo: ${product.modelo}</p>
                         <p>Precio: $${product.precio.toLocaleString()}</p>
                         <p>Stock: ${product.stock}</p>
-                        <input type="number" min="0" max="${product.stock}" value="0" class="form-control">
-                        <button onclick="addToCart(${product.id})" class="btn btn-primary mt-2">Agregar al Carrito</button>
+                        <input type="number" id="quantity-${product.id}" min="0" max="${product.stock}" value="0" class="form-control">
+                        <button onclick="addToCart(${product.id}, document.getElementById('quantity-${product.id}').value)" class="btn btn-primary mt-2">Agregar al Carrito</button>
                     </div>
                 </div>
             </div>`;
-
+    
         rowContainer.innerHTML += productCard;
     });
 
@@ -81,27 +81,29 @@ function renderAllProducts() {
 
 let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
-function addToCart(productId) {
+function addToCart(productId, quantity) {
     const product = productos.find(p => p.id === productId);
     if (!product || product.stock <= 0) {
         Swal.fire({
-          title: "Error",
-          text: "No hay stock de este producto",
-          icon: "error"
+            title: "Error",
+            text: "No hay stock de este producto",
+            icon: "error"
         });
         return;
     }
 
+    quantity = parseInt(quantity, 10);
+
     if (!cart[productId]) {
-        cart[productId] = {...product, quantity: 1 };
+        cart[productId] = {...product, quantity: quantity};
     } else {
-        cart[productId].quantity++;
+        cart[productId].quantity += quantity;
     }
 
     Swal.fire({
-      title: "Producto Agregado",
-      text: `Usted agregó ${product.nombre} al carrito`,
-      icon: "success"
+        title: "Producto Agregado",
+        text: `Usted agregó ${quantity} ${product.nombre} al carrito`,
+        icon: "success"
     });
     saveCartToLocalStorage();
 }
@@ -133,7 +135,6 @@ window.onload = function() {
     loadCartFromLocalStorage();
 };
 
-// Este bloque se carga solo en carrito.html
 if (document.getElementById('cartContainer')) {
     renderCart();
 }
@@ -172,23 +173,21 @@ function renderCart() {
 function purchase() {
     if (Object.keys(cart).length === 0) {
         Swal.fire({
-          title: "Carrito Vacío",
-          text: "El carrito está vacío",
-          icon: "warning"
+            title: "Carrito Vacío",
+            text: "El carrito está vacío",
+            icon: "warning"
         });
         return;
     }
     Swal.fire({
-      title: "Compra Realizada",
-      text: "Su compra se realizó con éxito",
-      icon: "success"
+        title: "Compra Realizada",
+        text: "Su compra se realizó con éxito",
+        icon: "success"
     });
     localStorage.removeItem('cart');
     cart = {};
     renderCart();
 }
-
-
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const body = document.body;

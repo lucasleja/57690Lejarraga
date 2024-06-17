@@ -12,8 +12,6 @@
     font-weight: bold;
   }
   
-
-  
   @media screen and (min-width: 576px) {
     .navbar-brand {
       font-size: 50px;
@@ -36,13 +34,13 @@
     }
   }
 
-
-
-  .dark-mode {
-    background-color: #333; /* Color de fondo oscuro */
-    /* color: #fff; */ /* Texto blanco */
+.fondoFooter {
+  background-color: #e56b1e;
 }
 
+  .dark-mode {
+    background-color: #333;
+}
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -59,11 +57,33 @@
   border-radius: 5px;
 }
 
-
-
 .swal2-confirm {
-  background-color: #007bff; /* Cambia esto al color que desees */
+  background-color: #007bff;
 }
 .swal2-cancel {
-  background-color: #dc3545; /* Cambia esto al color que desees */
+  background-color: #dc3545;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-image-container {
+  overflow: hidden;
+  position: relative;
+  height: 200px;
+}
+
+.card-image-container img {
+  transition: transform 0.3s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.card-image-container:hover img {
+  transform: translate(-50%, -50%) scale(1.5);
 }
